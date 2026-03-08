@@ -132,22 +132,32 @@ export default function ResumeForm({ initialData, resumeId }: { initialData?: Re
     };
 
     return (
-        <div className="bg-white/[0.02] rounded-xl shadow-sm border border-white/10 p-6 md:p-8">
+        <div className="bg-[#0a0a0a]/80 backdrop-blur-3xl rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(99,102,241,0.15)] border border-white/5 p-6 md:p-10 relative overflow-hidden mx-auto w-full max-w-4xl">
+            {/* Background glowing effects */}
+            <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-500/10 rounded-full blur-[100px] -mr-20 -mt-20 pointer-events-none mix-blend-screen"></div>
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-pink-500/10 rounded-full blur-[100px] -ml-20 -mb-20 pointer-events-none mix-blend-screen"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[url('https://res.cloudinary.com/djp3rpxv9/image/upload/v1709191024/grid-pattern_nqzlkx.svg')] bg-[length:60px_60px] opacity-[0.03] pointer-events-none"></div>
+
             {/* Stepper */}
-            <div className="mb-8">
+            <div className="mb-12 relative z-10">
                 <div className="flex items-center justify-between relative">
-                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 bg-gray-200 dark:bg-gray-800 hidden sm:block"></div>
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1.5 bg-white/5 hidden sm:block rounded-full overflow-hidden">
+                        <div
+                            className="absolute left-0 top-0 h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full transition-all duration-700 ease-out shadow-[0_0_10px_rgba(168,85,247,0.5)]"
+                            style={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
+                        ></div>
+                    </div>
                     {steps.map((step, index) => (
                         <div key={step.id} className="relative z-10 flex flex-col items-center">
                             <div
-                                className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors ${index <= currentStep
-                                    ? 'bg-yellow-400 text-black shadow-[0_0_15px_-3px_rgba(234,179,8,0.3)]'
-                                    : 'bg-gray-200 dark:bg-gray-800 text-gray-400'
+                                className={`w-12 h-12 rounded-full flex items-center justify-center text-sm font-black transition-all duration-500 ${index <= currentStep
+                                    ? 'bg-gradient-to-br from-indigo-400 via-purple-500 to-pink-500 text-white shadow-[0_0_25px_-3px_rgba(168,85,247,0.6)] scale-110 ring-4 ring-black'
+                                    : 'bg-[#0a0a0a] border border-white/10 text-gray-500 backdrop-blur-md ring-4 ring-black group-hover:border-white/20'
                                     }`}
                             >
                                 {index + 1}
                             </div>
-                            <span className={`mt-2 text-xs font-medium hidden sm:block ${index <= currentStep ? 'text-yellow-400' : 'text-gray-400'
+                            <span className={`mt-4 text-[11px] uppercase tracking-widest font-bold hidden sm:block transition-colors duration-500 ${index <= currentStep ? 'text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-pink-400' : 'text-gray-600'
                                 }`}>
                                 {step.title}
                             </span>
@@ -163,40 +173,40 @@ export default function ResumeForm({ initialData, resumeId }: { initialData?: Re
                         e.preventDefault();
                     }
                 }
-            }} className="space-y-8">
+            }} className="space-y-8 relative z-10">
 
                 {/* Step 1: Personal Info */}
                 {currentStep === 0 && (
                     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                        <h2 className="text-xl font-bold text-white mb-4">Personal Information</h2>
+                        <h2 className="text-2xl font-black text-white mb-6 tracking-tight flex items-center">Personal Information</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label className="block text-sm font-medium text-gray-300">Full Name</label>
-                                <input suppressHydrationWarning {...register('personalInfo.fullName', { required: true })} className="mt-1 block w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 text-white" />
+                                <input suppressHydrationWarning {...register('personalInfo.fullName', { required: true })} className="mt-2 block w-full rounded-2xl border border-white/10 bg-black/50 px-5 py-3.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 text-white transition-all duration-300 hover:border-indigo-500/30 hover:bg-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] placeholder:text-gray-600" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-300">Target Title (e.g. Software Engineer)</label>
-                                <input suppressHydrationWarning {...register('personalInfo.title', { required: true })} className="mt-1 block w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 text-white" />
+                                <input suppressHydrationWarning {...register('personalInfo.title', { required: true })} className="mt-2 block w-full rounded-2xl border border-white/10 bg-black/50 px-5 py-3.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 text-white transition-all duration-300 hover:border-indigo-500/30 hover:bg-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] placeholder:text-gray-600" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-300">Email</label>
-                                <input suppressHydrationWarning type="email" {...register('personalInfo.email', { required: true })} className="mt-1 block w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 text-white" />
+                                <input suppressHydrationWarning type="email" {...register('personalInfo.email', { required: true })} className="mt-2 block w-full rounded-2xl border border-white/10 bg-black/50 px-5 py-3.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 text-white transition-all duration-300 hover:border-indigo-500/30 hover:bg-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] placeholder:text-gray-600" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-300">Phone</label>
-                                <input suppressHydrationWarning {...register('personalInfo.phone')} className="mt-1 block w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 text-white" />
+                                <input suppressHydrationWarning {...register('personalInfo.phone')} className="mt-2 block w-full rounded-2xl border border-white/10 bg-black/50 px-5 py-3.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 text-white transition-all duration-300 hover:border-indigo-500/30 hover:bg-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] placeholder:text-gray-600" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-300">Location</label>
-                                <input suppressHydrationWarning {...register('personalInfo.location')} className="mt-1 block w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 text-white" />
+                                <input suppressHydrationWarning {...register('personalInfo.location')} className="mt-2 block w-full rounded-2xl border border-white/10 bg-black/50 px-5 py-3.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 text-white transition-all duration-300 hover:border-indigo-500/30 hover:bg-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] placeholder:text-gray-600" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-300">LinkedIn URL</label>
-                                <input suppressHydrationWarning {...register('personalInfo.linkedin')} className="mt-1 block w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 text-white" />
+                                <input suppressHydrationWarning {...register('personalInfo.linkedin')} className="mt-2 block w-full rounded-2xl border border-white/10 bg-black/50 px-5 py-3.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 text-white transition-all duration-300 hover:border-indigo-500/30 hover:bg-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] placeholder:text-gray-600" />
                             </div>
                             <div className="md:col-span-2">
                                 <label className="block text-sm font-medium text-gray-300">Portfolio / Website</label>
-                                <input suppressHydrationWarning {...register('personalInfo.website')} className="mt-1 block w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 text-white" />
+                                <input suppressHydrationWarning {...register('personalInfo.website')} className="mt-2 block w-full rounded-2xl border border-white/10 bg-black/50 px-5 py-3.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 text-white transition-all duration-300 hover:border-indigo-500/30 hover:bg-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] placeholder:text-gray-600" />
                             </div>
                         </div>
                     </div>
@@ -206,13 +216,13 @@ export default function ResumeForm({ initialData, resumeId }: { initialData?: Re
                 {currentStep === 1 && (
                     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
                         <div>
-                            <h2 className="text-xl font-bold text-white mb-4">Professional Summary</h2>
+                            <h2 className="text-2xl font-black text-white mb-6 tracking-tight flex items-center">Professional Summary</h2>
                             <p className="text-sm text-gray-400 mb-2">Write a brief overview of your background. Note: Our AI will enhance this professionally.</p>
-                            <textarea suppressHydrationWarning {...register('summary')} rows={4} className="mt-1 block w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 text-white"></textarea>
+                            <textarea suppressHydrationWarning {...register('summary')} rows={4} className="mt-2 block w-full rounded-2xl border border-white/10 bg-black/50 px-5 py-3.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 text-white transition-all duration-300 hover:border-indigo-500/30 hover:bg-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] placeholder:text-gray-600"></textarea>
                         </div>
 
                         <div className="pt-4 border-t border-white/10">
-                            <h2 className="text-xl font-bold text-white mb-4">Key Skills</h2>
+                            <h2 className="text-2xl font-black text-white mb-6 tracking-tight flex items-center">Key Skills</h2>
                             <div className="flex flex-wrap gap-2">
                                 {skillFields.map((field, index) => (
                                     <div key={field.id} className="flex items-center gap-1 bg-white/[0.02] p-1 pl-2 rounded-md border border-white/10">
@@ -229,7 +239,7 @@ export default function ResumeForm({ initialData, resumeId }: { initialData?: Re
                                 <button suppressHydrationWarning
                                     type="button"
                                     onClick={() => appendSkill({ name: '' })}
-                                    className="flex items-center gap-1 text-sm text-yellow-400 hover:text-yellow-300 font-medium p-2"
+                                    className="flex items-center gap-1 text-sm text-cyan-400 hover:text-cyan-300 font-medium p-2"
                                 >
                                     <Plus className="w-4 h-4" /> Add Skill
                                 </button>
@@ -242,11 +252,11 @@ export default function ResumeForm({ initialData, resumeId }: { initialData?: Re
                 {currentStep === 2 && (
                     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
                         <div className="flex justify-between items-center mb-4">
-                            <h2 className="text-xl font-bold text-white">Work Experience</h2>
+                            <h2 className="text-2xl font-black text-white mb-6 tracking-tight flex items-center">Work Experience</h2>
                             <button suppressHydrationWarning
                                 type="button"
                                 onClick={() => appendExp({ company: '', position: '', startDate: '', endDate: '', description: '' })}
-                                className="flex items-center gap-1 text-sm bg-yellow-400/10 border border-yellow-400/20 text-yellow-400 px-3 py-1.5 rounded-md hover:bg-yellow-400/20 transition-colors font-medium"
+                                className="group flex items-center gap-2 text-sm bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 px-5 py-2.5 rounded-xl hover:bg-indigo-500/20 hover:border-indigo-500/40 hover:text-white transition-all duration-300 font-bold active:scale-[0.98] shadow-sm"
                             >
                                 <Plus className="w-4 h-4" /> Add Job
                             </button>
@@ -254,7 +264,7 @@ export default function ResumeForm({ initialData, resumeId }: { initialData?: Re
 
                         <div className="space-y-8">
                             {expFields.map((field, index) => (
-                                <div key={field.id} className="p-4 border border-white/10 rounded-lg bg-white/[0.02] relative">
+                                <div key={field.id} className="p-7 border border-white/5 rounded-3xl bg-black/30 relative group hover:border-white/10 hover:shadow-[0_10px_30px_-10px_rgba(99,102,241,0.1)] transition-all duration-500 backdrop-blur-sm">
                                     {expFields.length > 1 && (
                                         <button suppressHydrationWarning type="button" onClick={() => removeExp(index)} className="absolute top-4 right-4 text-gray-400 hover:text-red-500">
                                             <Trash2 className="w-5 h-5" />
@@ -263,24 +273,24 @@ export default function ResumeForm({ initialData, resumeId }: { initialData?: Re
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
                                         <div>
                                             <label className="block text-sm font-medium text-gray-300">Company</label>
-                                            <input suppressHydrationWarning {...register(`experience.${index}.company` as const, { required: true })} className="mt-1 block w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 text-white" />
+                                            <input suppressHydrationWarning {...register(`experience.${index}.company` as const, { required: true })} className="mt-2 block w-full rounded-2xl border border-white/10 bg-black/50 px-5 py-3.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 text-white transition-all duration-300 hover:border-indigo-500/30 hover:bg-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] placeholder:text-gray-600" />
                                         </div>
                                         <div>
                                             <label className="block text-sm font-medium text-gray-300">Position</label>
-                                            <input suppressHydrationWarning {...register(`experience.${index}.position` as const, { required: true })} className="mt-1 block w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 text-white" />
+                                            <input suppressHydrationWarning {...register(`experience.${index}.position` as const, { required: true })} className="mt-2 block w-full rounded-2xl border border-white/10 bg-black/50 px-5 py-3.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 text-white transition-all duration-300 hover:border-indigo-500/30 hover:bg-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] placeholder:text-gray-600" />
                                         </div>
                                         <div>
                                             <label className="block text-sm font-medium text-gray-300">Start Date</label>
-                                            <input suppressHydrationWarning type="month" {...register(`experience.${index}.startDate` as const, { required: true })} className="mt-1 block w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 text-white" />
+                                            <input suppressHydrationWarning type="month" {...register(`experience.${index}.startDate` as const, { required: true })} className="mt-2 block w-full rounded-2xl border border-white/10 bg-black/50 px-5 py-3.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 text-white transition-all duration-300 hover:border-indigo-500/30 hover:bg-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] placeholder:text-gray-600" />
                                         </div>
                                         <div>
                                             <label className="block text-sm font-medium text-gray-300">End Date (or Present)</label>
-                                            <input suppressHydrationWarning type="text" placeholder="YYYY-MM or Present" {...register(`experience.${index}.endDate` as const, { required: true })} className="mt-1 block w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 text-white" />
+                                            <input suppressHydrationWarning type="text" placeholder="YYYY-MM or Present" {...register(`experience.${index}.endDate` as const, { required: true })} className="mt-2 block w-full rounded-2xl border border-white/10 bg-black/50 px-5 py-3.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 text-white transition-all duration-300 hover:border-indigo-500/30 hover:bg-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] placeholder:text-gray-600" />
                                         </div>
                                         <div className="md:col-span-2">
                                             <label className="block text-sm font-medium text-gray-300">Description / Achievements (Bullet points)</label>
                                             <p className="text-xs text-gray-400 mb-1">Outline your duties. The AI will translate these into high-impact bullet points.</p>
-                                            <textarea suppressHydrationWarning rows={4} {...register(`experience.${index}.description` as const, { required: true })} className="mt-1 block w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 text-white"></textarea>
+                                            <textarea suppressHydrationWarning rows={4} {...register(`experience.${index}.description` as const, { required: true })} className="mt-2 block w-full rounded-2xl border border-white/10 bg-black/50 px-5 py-3.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 text-white transition-all duration-300 hover:border-indigo-500/30 hover:bg-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] placeholder:text-gray-600"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -293,11 +303,11 @@ export default function ResumeForm({ initialData, resumeId }: { initialData?: Re
                 {currentStep === 3 && (
                     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
                         <div className="flex justify-between items-center mb-4">
-                            <h2 className="text-xl font-bold text-white">Education</h2>
+                            <h2 className="text-2xl font-black text-white mb-6 tracking-tight flex items-center">Education</h2>
                             <button suppressHydrationWarning
                                 type="button"
                                 onClick={() => appendEdu({ school: '', degree: '', field: '', graduationDate: '' })}
-                                className="flex items-center gap-1 text-sm bg-yellow-400/10 border border-yellow-400/20 text-yellow-400 px-3 py-1.5 rounded-md hover:bg-yellow-400/20 transition-colors font-medium"
+                                className="group flex items-center gap-2 text-sm bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 px-5 py-2.5 rounded-xl hover:bg-indigo-500/20 hover:border-indigo-500/40 hover:text-white transition-all duration-300 font-bold active:scale-[0.98] shadow-sm"
                             >
                                 <Plus className="w-4 h-4" /> Add Education
                             </button>
@@ -305,7 +315,7 @@ export default function ResumeForm({ initialData, resumeId }: { initialData?: Re
 
                         <div className="space-y-6">
                             {eduFields.map((field, index) => (
-                                <div key={field.id} className="p-4 border border-white/10 rounded-lg bg-white/[0.02] relative">
+                                <div key={field.id} className="p-7 border border-white/5 rounded-3xl bg-black/30 relative group hover:border-white/10 hover:shadow-[0_10px_30px_-10px_rgba(99,102,241,0.1)] transition-all duration-500 backdrop-blur-sm">
                                     {eduFields.length > 1 && (
                                         <button suppressHydrationWarning type="button" onClick={() => removeEdu(index)} className="absolute top-4 right-4 text-gray-400 hover:text-red-500">
                                             <Trash2 className="w-5 h-5" />
@@ -314,19 +324,19 @@ export default function ResumeForm({ initialData, resumeId }: { initialData?: Re
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
                                         <div>
                                             <label className="block text-sm font-medium text-gray-300">School / University</label>
-                                            <input suppressHydrationWarning {...register(`education.${index}.school` as const, { required: true })} className="mt-1 block w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 text-white" />
+                                            <input suppressHydrationWarning {...register(`education.${index}.school` as const, { required: true })} className="mt-2 block w-full rounded-2xl border border-white/10 bg-black/50 px-5 py-3.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 text-white transition-all duration-300 hover:border-indigo-500/30 hover:bg-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] placeholder:text-gray-600" />
                                         </div>
                                         <div>
                                             <label className="block text-sm font-medium text-gray-300">Graduation Date</label>
-                                            <input suppressHydrationWarning type="month" {...register(`education.${index}.graduationDate` as const, { required: true })} className="mt-1 block w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 text-white" />
+                                            <input suppressHydrationWarning type="month" {...register(`education.${index}.graduationDate` as const, { required: true })} className="mt-2 block w-full rounded-2xl border border-white/10 bg-black/50 px-5 py-3.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 text-white transition-all duration-300 hover:border-indigo-500/30 hover:bg-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] placeholder:text-gray-600" />
                                         </div>
                                         <div>
                                             <label className="block text-sm font-medium text-gray-300">Degree (e.g. B.S., M.A.)</label>
-                                            <input suppressHydrationWarning {...register(`education.${index}.degree` as const, { required: true })} className="mt-1 block w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 text-white" />
+                                            <input suppressHydrationWarning {...register(`education.${index}.degree` as const, { required: true })} className="mt-2 block w-full rounded-2xl border border-white/10 bg-black/50 px-5 py-3.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 text-white transition-all duration-300 hover:border-indigo-500/30 hover:bg-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] placeholder:text-gray-600" />
                                         </div>
                                         <div>
                                             <label className="block text-sm font-medium text-gray-300">Field of Study</label>
-                                            <input suppressHydrationWarning {...register(`education.${index}.field` as const, { required: true })} className="mt-1 block w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 text-white" />
+                                            <input suppressHydrationWarning {...register(`education.${index}.field` as const, { required: true })} className="mt-2 block w-full rounded-2xl border border-white/10 bg-black/50 px-5 py-3.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 text-white transition-all duration-300 hover:border-indigo-500/30 hover:bg-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] placeholder:text-gray-600" />
                                         </div>
                                     </div>
                                 </div>
@@ -340,11 +350,11 @@ export default function ResumeForm({ initialData, resumeId }: { initialData?: Re
                     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                         <div>
                             <div className="flex justify-between items-center mb-4">
-                                <h2 className="text-xl font-bold text-white">Noteable Projects (Optional)</h2>
+                                <h2 className="text-2xl font-black text-white mb-6 tracking-tight flex items-center">Noteable Projects (Optional)</h2>
                                 <button suppressHydrationWarning
                                     type="button"
                                     onClick={() => appendProj({ name: '', description: '', link: '' })}
-                                    className="flex items-center gap-1 text-sm bg-yellow-400/10 border border-yellow-400/20 text-yellow-400 px-3 py-1.5 rounded-md hover:bg-yellow-400/20 transition-colors font-medium"
+                                    className="group flex items-center gap-2 text-sm bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 px-5 py-2.5 rounded-xl hover:bg-indigo-500/20 hover:border-indigo-500/40 hover:text-white transition-all duration-300 font-bold active:scale-[0.98] shadow-sm"
                                 >
                                     <Plus className="w-4 h-4" /> Add Project
                                 </button>
@@ -352,22 +362,22 @@ export default function ResumeForm({ initialData, resumeId }: { initialData?: Re
 
                             <div className="space-y-4">
                                 {projFields.map((field, index) => (
-                                    <div key={field.id} className="p-4 border border-white/10 rounded-lg bg-white/[0.02] relative">
+                                    <div key={field.id} className="p-7 border border-white/5 rounded-3xl bg-black/30 relative group hover:border-white/10 hover:shadow-[0_10px_30px_-10px_rgba(99,102,241,0.1)] transition-all duration-500 backdrop-blur-sm">
                                         <button suppressHydrationWarning type="button" onClick={() => removeProj(index)} className="absolute top-4 right-4 text-gray-400 hover:text-red-500">
                                             <Trash2 className="w-5 h-5" />
                                         </button>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
                                             <div>
                                                 <label className="block text-sm font-medium text-gray-300">Project Name</label>
-                                                <input suppressHydrationWarning {...register(`projects.${index}.name` as const)} className="mt-1 block w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 text-white" />
+                                                <input suppressHydrationWarning {...register(`projects.${index}.name` as const)} className="mt-2 block w-full rounded-2xl border border-white/10 bg-black/50 px-5 py-3.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 text-white transition-all duration-300 hover:border-indigo-500/30 hover:bg-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] placeholder:text-gray-600" />
                                             </div>
                                             <div>
                                                 <label className="block text-sm font-medium text-gray-300">Link</label>
-                                                <input suppressHydrationWarning {...register(`projects.${index}.link` as const)} className="mt-1 block w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 text-white" />
+                                                <input suppressHydrationWarning {...register(`projects.${index}.link` as const)} className="mt-2 block w-full rounded-2xl border border-white/10 bg-black/50 px-5 py-3.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 text-white transition-all duration-300 hover:border-indigo-500/30 hover:bg-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] placeholder:text-gray-600" />
                                             </div>
                                             <div className="md:col-span-2">
                                                 <label className="block text-sm font-medium text-gray-300">Description</label>
-                                                <textarea suppressHydrationWarning rows={2} {...register(`projects.${index}.description` as const)} className="mt-1 block w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 text-white"></textarea>
+                                                <textarea suppressHydrationWarning rows={2} {...register(`projects.${index}.description` as const)} className="mt-2 block w-full rounded-2xl border border-white/10 bg-black/50 px-5 py-3.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 text-white transition-all duration-300 hover:border-indigo-500/30 hover:bg-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] placeholder:text-gray-600"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -378,11 +388,11 @@ export default function ResumeForm({ initialData, resumeId }: { initialData?: Re
 
                         <div className="pt-6 border-t border-white/10">
                             <div className="flex justify-between items-center mb-4">
-                                <h2 className="text-xl font-bold text-white">Certifications (Optional)</h2>
+                                <h2 className="text-2xl font-black text-white mb-6 tracking-tight flex items-center">Certifications (Optional)</h2>
                                 <button suppressHydrationWarning
                                     type="button"
                                     onClick={() => appendCert({ name: '', issuer: '', date: '' })}
-                                    className="flex items-center gap-1 text-sm bg-yellow-400/10 border border-yellow-400/20 text-yellow-400 px-3 py-1.5 rounded-md hover:bg-yellow-400/20 transition-colors font-medium"
+                                    className="group flex items-center gap-2 text-sm bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 px-5 py-2.5 rounded-xl hover:bg-indigo-500/20 hover:border-indigo-500/40 hover:text-white transition-all duration-300 font-bold active:scale-[0.98] shadow-sm"
                                 >
                                     <Plus className="w-4 h-4" /> Add Cert
                                 </button>
@@ -390,18 +400,18 @@ export default function ResumeForm({ initialData, resumeId }: { initialData?: Re
 
                             <div className="space-y-4">
                                 {certFields.map((field, index) => (
-                                    <div key={field.id} className="p-4 border border-white/10 rounded-lg bg-white/[0.02] relative">
+                                    <div key={field.id} className="p-7 border border-white/5 rounded-3xl bg-black/30 relative group hover:border-white/10 hover:shadow-[0_10px_30px_-10px_rgba(99,102,241,0.1)] transition-all duration-500 backdrop-blur-sm">
                                         <button suppressHydrationWarning type="button" onClick={() => removeCert(index)} className="absolute top-4 right-4 text-gray-400 hover:text-red-500">
                                             <Trash2 className="w-5 h-5" />
                                         </button>
                                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
                                             <div className="md:col-span-2">
                                                 <label className="block text-sm font-medium text-gray-300">Certification Name</label>
-                                                <input suppressHydrationWarning {...register(`certifications.${index}.name` as const)} className="mt-1 block w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 text-white" />
+                                                <input suppressHydrationWarning {...register(`certifications.${index}.name` as const)} className="mt-2 block w-full rounded-2xl border border-white/10 bg-black/50 px-5 py-3.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 text-white transition-all duration-300 hover:border-indigo-500/30 hover:bg-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] placeholder:text-gray-600" />
                                             </div>
                                             <div>
                                                 <label className="block text-sm font-medium text-gray-300">Issuer / Date</label>
-                                                <input suppressHydrationWarning placeholder="e.g. AWS, 2023" {...register(`certifications.${index}.issuer` as const)} className="mt-1 block w-full rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm focus:border-yellow-500 focus:outline-none focus:ring-1 focus:ring-yellow-500 text-white" />
+                                                <input suppressHydrationWarning placeholder="e.g. AWS, 2023" {...register(`certifications.${index}.issuer` as const)} className="mt-2 block w-full rounded-2xl border border-white/10 bg-black/50 px-5 py-3.5 text-sm focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 text-white transition-all duration-300 hover:border-indigo-500/30 hover:bg-black/60 shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] placeholder:text-gray-600" />
                                             </div>
                                         </div>
                                     </div>
@@ -413,15 +423,15 @@ export default function ResumeForm({ initialData, resumeId }: { initialData?: Re
                 )}
 
                 {/* Navigation Actions */}
-                <div className="flex justify-between pt-6 border-t border-white/10">
+                <div className="flex justify-between pt-8 mt-4 border-t border-white/5">
                     <button suppressHydrationWarning
                         key="back-btn"
                         type="button"
                         onClick={prevStep}
                         disabled={currentStep === 0 || isGenerating}
-                        className="inline-flex items-center px-4 py-2 border border-white/10 shadow-sm text-sm font-medium rounded-md text-gray-200 bg-white/[0.03] hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 disabled:opacity-50 transition-colors"
+                        className="group inline-flex items-center px-6 py-3 border border-white/10 shadow-sm text-sm font-bold rounded-xl text-gray-400 bg-white/5 hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-900 disabled:opacity-50 transition-all duration-300 active:scale-[0.98]"
                     >
-                        <ArrowLeft className="w-4 h-4 mr-2" /> Back
+                        <ArrowLeft className="w-4 h-4 mr-2 transition-transform duration-300 group-hover:-translate-x-1" /> Back
                     </button>
 
                     {currentStep < steps.length - 1 ? (
@@ -429,22 +439,28 @@ export default function ResumeForm({ initialData, resumeId }: { initialData?: Re
                             key="next-btn"
                             type="button"
                             onClick={nextStep}
-                            className="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-colors"
+                            className="group inline-flex items-center px-10 py-3.5 border border-transparent text-sm font-bold rounded-xl shadow-[0_0_20px_-5px_rgba(255,255,255,0.2)] text-black bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-900 transition-all duration-300 active:scale-[0.97]"
                         >
-                            Next <ArrowRight className="w-4 h-4 ml-2" />
+                            Next <ArrowRight className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
                         </button>
                     ) : (
                         <button suppressHydrationWarning
                             key="submit-btn"
                             type="submit"
                             disabled={isGenerating}
-                            className="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 transition-colors"
+                            className="group relative inline-flex items-center justify-center px-10 py-3.5 text-sm font-bold text-white bg-black rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-indigo-500 transition-all hover:scale-105 active:scale-[0.98] duration-300 disabled:opacity-50 disabled:hover:scale-100"
                         >
-                            {isGenerating ? (
-                                <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Generating AI Resume...</>
-                            ) : (
-                                <><Sparkles className="w-4 h-4 mr-2" /> Generate ATS Resume</>
-                            )}
+                            <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-xl opacity-100 transition-opacity duration-300"></div>
+                            <div className="absolute inset-[1.5px] bg-black rounded-[10px] group-hover:bg-opacity-0 transition-all duration-300"></div>
+                            <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-xl opacity-0 group-hover:opacity-40 blur-lg transition-opacity duration-500"></div>
+
+                            <span className="relative z-10 flex items-center">
+                                {isGenerating ? (
+                                    <><Loader2 className="w-5 h-5 mr-2 animate-spin text-white" /> Generating Magic...</>
+                                ) : (
+                                    <><Sparkles className="w-4 h-4 mr-2 transition-transform duration-500 group-hover:rotate-12 group-hover:scale-110 text-white" /> Generate AI Resume</>
+                                )}
+                            </span>
                         </button>
                     )}
                 </div>

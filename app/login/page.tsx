@@ -55,13 +55,17 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-black px-4 selection:bg-yellow-400 selection:text-black">
-            <div className="w-full max-w-md space-y-8 bg-white/[0.02] p-8 rounded-2xl shadow-2xl border border-white/10">
+        <div className="flex min-h-screen items-center justify-center bg-[#050505] px-4 selection:bg-indigo-500/30 selection:text-indigo-200 relative overflow-hidden">
+            {/* Background glowing effects */}
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen"></div>
+            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-pink-600/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen"></div>
+
+            <div className="w-full max-w-md space-y-8 bg-[#0a0a0a]/80 backdrop-blur-3xl p-8 rounded-[2.5rem] shadow-[0_20px_60px_-15px_rgba(99,102,241,0.15)] border border-white/5 relative z-10">
                 <div className="flex flex-col items-center">
-                    <div className="bg-yellow-400 p-3 rounded-xl mb-4">
-                        <FileText className="text-black w-8 h-8" />
+                    <div className="bg-gradient-to-br from-indigo-400 via-purple-500 to-pink-500 p-4 rounded-2xl mb-5 shadow-[0_0_30px_-5px_rgba(168,85,247,0.5)]">
+                        <FileText className="text-white w-8 h-8" />
                     </div>
-                    <h2 className="text-2xl font-bold text-white">Welcome back</h2>
+                    <h2 className="text-3xl font-black text-white tracking-tight">Welcome back</h2>
                     <p className="text-gray-400 mt-2 text-sm">Sign in to your account or create a new one</p>
                 </div>
 
@@ -78,7 +82,7 @@ export default function LoginPage() {
                                 suppressHydrationWarning
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="mt-1 block w-full px-4 py-3 bg-white/[0.03] border border-white/10 rounded-lg shadow-sm placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent sm:text-sm transition-all"
+                                className="mt-1 block w-full px-5 py-3.5 bg-black/50 border border-white/10 rounded-xl shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] placeholder-gray-600 text-white focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all duration-300 hover:border-indigo-500/30 hover:bg-black/60 sm:text-sm"
                                 placeholder="you@example.com"
                             />
                         </div>
@@ -93,7 +97,7 @@ export default function LoginPage() {
                                 suppressHydrationWarning
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="mt-1 block w-full px-4 py-3 bg-white/[0.03] border border-white/10 rounded-lg shadow-sm placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent sm:text-sm transition-all"
+                                className="mt-1 block w-full px-5 py-3.5 bg-black/50 border border-white/10 rounded-xl shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] placeholder-gray-600 text-white focus:outline-none focus:ring-4 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all duration-300 hover:border-indigo-500/30 hover:bg-black/60 sm:text-sm"
                                 placeholder="••••••••"
                             />
                         </div>
@@ -102,22 +106,30 @@ export default function LoginPage() {
                     {error && <div className="text-red-400 text-sm text-center bg-red-950/30 p-3 rounded-lg border border-red-900/50">{error}</div>}
                     {message && <div className="text-green-400 text-sm text-center bg-green-950/30 p-3 rounded-lg border border-green-900/50">{message}</div>}
 
-                    <div className="flex gap-4">
+                    <div className="flex flex-col gap-4">
                         <button
                             onClick={handleSignIn}
                             disabled={isLoading}
                             suppressHydrationWarning
-                            className="group relative w-full flex justify-center py-3 px-4 text-sm font-bold rounded-lg text-black bg-yellow-400 hover:bg-yellow-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-yellow-500 disabled:opacity-50 transition-all shadow-[0_0_15px_-3px_rgba(234,179,8,0.3)]"
+                            className="group relative w-full flex justify-center py-3.5 px-4 text-sm font-bold rounded-xl text-black bg-white hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white disabled:opacity-50 transition-all shadow-[0_0_20px_-5px_rgba(255,255,255,0.2)] active:scale-[0.98]"
                         >
-                            {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Sign In'}
+                            {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Log In Securely'}
                         </button>
+                        <div className="relative">
+                            <div className="absolute inset-0 flex items-center">
+                                <div className="w-full border-t border-white/5"></div>
+                            </div>
+                            <div className="relative flex justify-center text-xs">
+                                <span className="bg-[#0a0a0a] px-2 text-gray-500">Or continue with</span>
+                            </div>
+                        </div>
                         <button
                             onClick={handleSignUp}
                             disabled={isLoading}
                             suppressHydrationWarning
-                            className="group relative w-full flex justify-center py-3 px-4 border border-white/20 text-sm font-bold rounded-lg text-white bg-white/[0.05] hover:bg-white/[0.1] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-yellow-500 disabled:opacity-50 transition-all"
+                            className="group relative w-full flex justify-center py-3.5 px-4 border border-white/10 text-sm font-bold rounded-xl text-gray-300 bg-[#050505] hover:border-indigo-500/50 hover:text-white hover:shadow-[0_0_20px_rgba(99,102,241,0.2)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-indigo-500 disabled:opacity-50 transition-all active:scale-[0.98]"
                         >
-                            Sign Up
+                            Create an Account
                         </button>
                     </div>
                 </form>
