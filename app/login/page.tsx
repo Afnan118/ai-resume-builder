@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
-import { FileText, Loader2 } from 'lucide-react';
+import { FileText, Loader2, Chrome } from 'lucide-react';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -13,6 +13,16 @@ export default function LoginPage() {
     const [message, setMessage] = useState<string | null>(null);
     const router = useRouter();
     const supabase = createClient();
+
+    useEffect(() => {
+        const checkSession = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+                router.push('/dashboard');
+            }
+        };
+        checkSession();
+    }, [supabase, router]);
 
     const handleSignUp = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -51,6 +61,22 @@ export default function LoginPage() {
         } else {
             router.push('/dashboard');
             router.refresh();
+        }
+    };
+
+    const handleGoogleSignIn = async () => {
+        setIsLoading(true);
+        setError(null);
+        const { error } = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+                redirectTo: `${location.origin}/auth/callback`,
+            },
+        });
+
+        if (error) {
+            setError(error.message);
+            setIsLoading(false);
         }
     };
 
@@ -115,15 +141,29 @@ export default function LoginPage() {
                         >
                             {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Log In Securely'}
                         </button>
+
+                        <button
+                            type="button"
+                            onClick={handleGoogleSignIn}
+                            disabled={isLoading}
+                            suppressHydrationWarning
+                            className="group relative w-full flex items-center justify-center gap-3 py-3.5 px-4 text-sm font-bold rounded-xl text-white bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white/20 disabled:opacity-50 transition-all active:scale-[0.98]"
+                        >
+                            <Chrome className="w-5 h-5" />
+                            Continue with Google
+                        </button>
+
                         <div className="relative">
                             <div className="absolute inset-0 flex items-center">
                                 <div className="w-full border-t border-white/5"></div>
                             </div>
                             <div className="relative flex justify-center text-xs">
-                                <span className="bg-[#0a0a0a] px-2 text-gray-500">Or continue with</span>
+                                <span className="bg-[#0a0a0a] px-2 text-gray-500">Or create a new account</span>
                             </div>
                         </div>
+
                         <button
+                            type="button"
                             onClick={handleSignUp}
                             disabled={isLoading}
                             suppressHydrationWarning
