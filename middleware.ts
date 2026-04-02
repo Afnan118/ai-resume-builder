@@ -61,7 +61,19 @@ export async function middleware(request: NextRequest) {
         }
     )
 
-    await supabase.auth.getUser()
+    // This will refresh session if expired - required for Server Components
+    // https://supabase.com/docs/guides/auth/server-side/nextjs
+    const { data: { user } } = await supabase.auth.getUser()
+
+    // Protected route check
+    if (!user && request.nextUrl.pathname.startsWith('/dashboard')) {
+        return NextResponse.redirect(new URL('/login', request.url))
+    }
+
+    // Auth redirection check: if logged in and on login/home, go to dashboard
+    if (user && (request.nextUrl.pathname === '/login' || request.nextUrl.pathname === '/')) {
+        return NextResponse.redirect(new URL('/dashboard', request.url))
+    }
 
     return response
 }
