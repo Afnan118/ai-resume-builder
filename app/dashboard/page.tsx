@@ -3,6 +3,8 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { PlusCircle, FileText, ArrowRight, LogOut } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export default async function DashboardPage() {
     const supabase = await createClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();

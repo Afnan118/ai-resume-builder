@@ -107,7 +107,8 @@ export default function ResumeForm({ initialData, resumeId }: { initialData?: Re
                 await supabase.from('resumes').update({
                     resume_input_data: data,
                     generated_resume_text: generatedText
-                }).eq('id', resumeId);
+                }).eq('id', resumeId)
+                  .eq('user_id', user.id);
             } else {
                 const { data: newResume, error } = await supabase.from('resumes').insert({
                     user_id: user.id,

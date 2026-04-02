@@ -5,6 +5,8 @@ import ResumePreview from '@/components/ResumePreview';
 import Link from 'next/link';
 import { ArrowLeft, FileText } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export default async function ResumeBuilderPage(props: {
     searchParams: Promise<{ id?: string; preview?: string; edit?: string }>;
 }) {
